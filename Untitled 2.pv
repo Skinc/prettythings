@@ -1,0 +1,62 @@
+def getStep(c1, c2, q):
+    rstep = (c1[0] - c2[0])/q
+    gstep = (c1[1] - c2[1])/q
+    bstep =( c1[2] - c2[2])/q
+    return (rstep, gstep, bstep)    
+def getSteps(tl, tr, bl, br):
+    global quadH
+    global quadW
+    th = getStep(tl, tr, quadW)
+    bh = getStep(bl, br, quadW)
+    lv = getStep(tl, bl, quadH)
+    rv = getStep(tl, br, quadH)
+    return th, bh, lv, rv
+
+import random
+s = 100
+size(s+1, s+1)
+background(1)
+
+rows = 3
+cols = 3
+points ={}
+quads = {}
+quadH = s/(rows-1)
+quadW = s/(cols-1)
+for i in range(rows):
+    for j in range(cols):
+        point = random.random(),random.random(),random.random()
+        points[(i,j)] = point  
+for i in range(rows-1):
+    for j in range(cols-1):
+        quads[(i,j)] = [points[i,j], points[i+1,j], points[i,j+1], points[i+1, j+1]]
+for key in quads.keys():
+    print key
+    x,y = key
+    cornerX = x*quadW
+    cornerY = y*quadH
+    q = quads[key]
+    
+    tl = q[0]
+    tr = q[1]
+    bl = q[2]
+    br = q[3]
+    t, b, l, r = getSteps(tl, tr, bl, br)
+    print th, bh, lv, rv
+    for hor in range(quadW):
+        for ver in range (quadH):
+            r = .5 * vert/quadH *(hor*th[0]+tl[0] + hor 
+    # ltr = [tl[]]
+    # ttb = []
+    rect( cornerX, cornerY, 10,10, roundness=0.0, radius=None, plot=True)
+    fill(RGB,tl[0], tl,)
+    rect( cornerX + quadW, cornerY, 10,10, roundness=0.0, radius=None, plot=True)
+    fill(RGB,tr)
+    rect( cornerX, cornerY + quadH, 10,10, roundness=0.0, radius=None, plot=True)
+    fill(RGB,bl)
+    rect( cornerX+quadW, cornerY+quadH, 10,10, roundness=0.0, radius=None, plot=True)
+    fill(RGB,br)
+    
+    
+# rect( x, y, boxSize, boxSize, roundness=0.0, radius=None, plot=True)
+

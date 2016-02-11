@@ -1,0 +1,72 @@
+def getRan(ran, arr):
+    nr = arr[random.randint(0,len(arr)-1)]
+    conflict = ((ran == 'u' and nr == 'd') or (ran == 'd' and nr == 'u') or (ran == 'l' and nr == 'r') or (ran == 'r' and nr == 'l'))
+    if conflict:
+        return getRan(ran, arr)
+    return nr
+    
+def move(x,y,m):
+    global boxSize
+    if m == 'u':
+        y -= boxSize 
+    if m == 'd':
+        y += boxSize
+    if m == 'l':
+        x -= boxSize
+    if m == 'r':
+        x += boxSize
+    return x,y
+    
+def check(x,y):
+    global s
+    if (x > s - 1 or x < 0 or y > s - 1 or y < 0):
+        return True
+    return False
+    
+def changeColor(r,g,b):
+    r += random.gauss(0, .02)
+    g += random.gauss(0, .02)
+    b += random.gauss(0, .02)
+    return r,g,b
+    
+def makeSnake(arr, x, y , r, g, b):
+    global boxSize
+    done = False
+    ran = arr[random.randint(0,len(arr)-1)]
+    while (not done):
+        ran = getRan(ran, arr)
+        x,y = move(x,y, ran)
+        done = check(x, y)
+        r,g,b = changeColor(r,g,b)
+        rect( x, y, boxSize, boxSize, roundness=0.0, radius=None, plot=True)
+        boxSize += .1
+
+
+        fill(RGB, r,g, b)
+
+
+    
+    
+import random
+main = 5
+rest = 4
+uArr = ['u'] * main + ['l', 'd', 'r'] * rest
+dArr = ['d'] * main + ['l', 'u', 'r'] * rest
+lArr = ['l'] * main + ['u', 'd', 'r'] * rest
+rArr = ['r'] * main + ['l', 'd', 'u'] * rest
+Arrs = [uArr, dArr, lArr, rArr]
+
+boxSize = 1 
+s = 256*4
+size(s, s)
+background(1)
+
+x = s / 2.0
+y = s / 2.0
+r, g, b = .5, .5, .5
+
+for a in Arrs:
+    print r,g,b
+    makeSnake(a, x, y, r, g, b)
+    boxSize = 1
+    
